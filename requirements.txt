@@ -1,0 +1,5 @@
+requests
+dicttoxml
+xmltodict
+huawei-lte-api
+typing;python_version<"3.5"
