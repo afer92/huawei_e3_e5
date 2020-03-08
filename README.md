@@ -26,7 +26,7 @@ msisdn         : +33.........
 SerialNumber   : D...............
 softwareVersion: 21.333.63.00.1217
 hardwareVersion: CL1E5573SM11
-MacAddress1    : 88:40:3B:FF:08:57
+MacAddress1    : 88:00:00:00:00:00
 WebUIVersion   : 17.100.20.06.1217
 ProductFamily  : LTE
 classify       : mobile-wifi
