@@ -50,5 +50,7 @@ workmode       : LTE
     'lte_bandinfo': None
 }
 
+>>> gsm.send_sms(numbers, message)
+
 >>> gsm.control_reboot()
 ```
