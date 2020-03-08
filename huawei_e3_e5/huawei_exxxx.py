@@ -38,7 +38,7 @@ class HuaweiModem():
         if self._password is None:
             self._base_url = "http://{}/".format(self._ip)
         else:
-            self._base_url = "http://{}:{}@{}/".format(self._ip, self._user, self._password)
+            self._base_url = "http://{}:{}@{}/".format(self._user, self._password, self._ip)
 
         self._connection = AuthorizedConnection(self._base_url)
         self._client = Client(self._connection)
@@ -528,6 +528,9 @@ def main():
     parser.add_argument(u'--reboot', u'-r', help='Reboot usb stick', action="store_true")
     parser.add_argument(u'--number', u'-n', help='Phone numbers comma separated')
     parser.add_argument(u'--text', u'-t', help='sms text')
+    parser.add_argument(u'--user', u'-u', help='User')
+    parser.add_argument(u'--password', u'-p', help='Password')
+    
     args = parser.parse_args()
 
     if args.debug:
@@ -537,7 +540,10 @@ def main():
     if args.critical:
         loglevel = logging.CRITICAL
 
-    gsm = HuaweiModem()
+    if args.user and args.password:
+        gsm = HuaweiModem(user=args.user, password=args.password)
+    else:
+        gsm = HuaweiModem()
 
     if gsm.present is False:
         return
