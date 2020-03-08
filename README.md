@@ -32,6 +32,7 @@ ProductFamily  : LTE
 classify       : mobile-wifi
 supportmode    : LTE|WCDMA|GSM
 workmode       : LTE
+
 >>> gsm.device_signal
 {
     'pci': '69',
@@ -48,4 +49,6 @@ workmode       : LTE
     'lte_bandwidth': None,
     'lte_bandinfo': None
 }
+
+>>> gsm.control_reboot()
 ```
