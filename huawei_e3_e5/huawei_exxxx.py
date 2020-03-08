@@ -103,6 +103,19 @@ class HuaweiModem():
                 (self.supportmode, self.workmode)
         return part0 + part1 + part2 + part3 + part4 + part5 + part6
 
+    def send_sms(self, numbers, message):
+        """ send sms to a list of number
+
+        :param numbers: array of phone number
+        :param text to send
+        """
+        """ Added 04th june 2017 by Bjoern"""
+        """ Updated 01th febr 2020 by Afer92"""
+        phones = u''
+        if type(numbers) == str:
+            numbers = numbers.split(u',')
+        self._client.sms.send_sms(numbers, message)
+
     def _print_dict(self, name, one_dict, callBack=print):
         result = u'\n{}:\n'.format(name)
         for k, v in one_dict.items():
@@ -593,6 +606,10 @@ def main():
         gsm.print_out_messages()
     elif args.list_in:
         gsm.print_in_messages()
+
+    if args.number and args.text:
+        print(args.number, args.text)
+        gsm.send_sms(args.number, args.text)
 
 
 if __name__ == '__main__':
