@@ -19,11 +19,11 @@ Tool to manage huawei hilink modems (E3 and E5 series)
 >>> gsm
 <HuaweiModem None (None)>
 DeviceName     : E5577Cs-321
-imei           : 863533042457552
-imsi           : 208150020735953
-iccid          : 8933150018080412939
-msisdn         : +33766890253
-SerialNumber   : D2L7S19420001570
+imei           : 8..............
+imsi           : 2..............
+iccid          : 8..................
+msisdn         : +33.........
+SerialNumber   : D...............
 softwareVersion: 21.333.63.00.1217
 hardwareVersion: CL1E5573SM11
 MacAddress1    : 88:40:3B:FF:08:57
