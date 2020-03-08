@@ -1,3 +1,5 @@
 include requirements.txt
 include README.md
 recursive-include tests *
+huawei_e3_e5/__init__.py
+huawei_e3_e5/huawei_exxxx.py
