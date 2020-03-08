@@ -15,7 +15,8 @@ Tool to manage huawei hilink modems (E3 and E5 series)
 
 ```python
 >>> from huawei_e3_e5.huawei_exxxx import HuaweiModem as HuaweiModem
->>> gsm = HuaweiModem()
+>>> gsm = HuaweiModem(user='admin', password='SECRET') # E5xxxx
+>>> gsm = HuaweiModem() # E3xxx
 >>> gsm
 <HuaweiModem None (None)>
 DeviceName     : E5577Cs-321
