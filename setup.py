@@ -5,7 +5,7 @@ setup(
     name='huawei_e3_e5',
     version='0.1.0',
     # packages=find_packages(exclude=['tests', 'tests.*']),
-    # package_data={'huawei_lte_api': ['py.typed']},
+    package_data={'huawei_e3_e5': ['py.typed']},
     install_requires=[
         'requests',
         'dicttoxml',

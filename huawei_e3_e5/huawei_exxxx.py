@@ -88,6 +88,21 @@ class HuaweiModem():
         self._present = False
         self.init()
 
+    def __repr__(self):
+        part0 = u'<HuaweiModem {} ({})>'.format(self.interface, self.path)
+        part1 = u'\nDeviceName     : %s\nimei           : %s\nimsi           : %s\n' %\
+                (self.deviceName, self.imei, self.imsi)
+        part2 = u'iccid          : %s\nmsisdn         : %s\n' %\
+                (self.iccid, self.msisdn)
+        part3 = u'SerialNumber   : %s\nsoftwareVersion: %s\nhardwareVersion: %s\n' %\
+                (self.serialNumber, self.softwareVersion, self.hardwareVersion)
+        part4 = u'MacAddress1    : %s\nWebUIVersion   : %s\n' % (self.macAddress1, self.webUIVersion)
+        part5 = u'ProductFamily  : %s\nclassify       : %s\n' %\
+                (self.productFamily, self.classify)
+        part6 = u'supportmode    : %s\nworkmode       : %s\n' %\
+                (self.supportmode, self.workmode)
+        return part0 + part1 + part2 + part3 + part4 + part5 + part6
+
     def _print_dict(self, name, one_dict, callBack=print):
         result = u'\n{}:\n'.format(name)
         for k, v in one_dict.items():
@@ -100,6 +115,14 @@ class HuaweiModem():
 
     def control_reboot(self):
         self._client.device.reboot()
+
+    @property
+    def interface(self):
+        return self._interface
+
+    @property
+    def path(self):
+        return self._path
 
     @property
     def ip(self):
@@ -424,7 +447,7 @@ class HuaweiModem():
         sms_list = self.get_sms_list(box_type=box_type)
         self.build_sms_list(sms_list, callback=callback)
 
-    def all_data(self, callback=print):
+    def all_data(self, callback=None):
         result = u'{}\n'.format(self)
         result += self.print_device_information(callback=None)
         result += self.print_autorun_version(callback=None)
