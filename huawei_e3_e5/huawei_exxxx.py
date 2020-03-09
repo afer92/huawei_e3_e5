@@ -354,6 +354,9 @@ class HuaweiModem():
         smss = []
         if int(sms_list[u'Count']) == 0:
             return smss
+        elif int(sms_list[u'Count']) == 1:
+            smss.append(sms_list[u'Messages'][u'Message'][0])
+            return smss
         for message in sms_list[u'Messages'][u'Message']:
             smss.append(message)
         return smss
@@ -380,7 +383,6 @@ class HuaweiModem():
 
     def print_draft_messages(self, callback=print):
         result = self._client.sms.get_sms_list(box_type=BoxTypeEnum.LOCAL_DRAFT)
-        return self.build_sms_list(result, callback=callback)
         return self.build_sms_list(result, callback=callback)
 
     @property
@@ -441,16 +443,22 @@ class HuaweiModem():
 
     def get_sms_list(self, box_type=BoxTypeEnum.LOCAL_INBOX, callback=None):
         result = self._client.sms.get_sms_list(box_type=box_type)
+        if int(result[u'Count']) == 1:
+            result[u'Messages'][u'Message'] = (result[u'Messages'][u'Message'],)
         return self.return_dict(result, callback=callback)
 
     def build_sms_list(self, sms_list, callback=None):
         result = []
         indx = 0
-        if int(sms_list[u'Count']) > 0:
+        if int(sms_list[u'Count']) > 1:
             for message in sms_list[u'Messages'][u'Message']:
                 indx += 1
                 result.append(self._print_dict(u'Message ({}/{})'.format(indx, sms_list[u'Count']),
                                                message, callBack=callback))
+            return result
+        elif int(sms_list[u'Count']) == 1:
+            result.append(self._print_dict(u'Message ({}/{})'.format('1', '1'),
+                                           sms_list[u'Messages'][u'Message'], callBack=callback))
             return result
         else:
             resul = u'Message None:'
