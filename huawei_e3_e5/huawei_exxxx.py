@@ -8,7 +8,7 @@ from huawei_lte_api.Client import Client
 from huawei_lte_api.AuthorizedConnection import AuthorizedConnection
 from huawei_lte_api.Connection import Connection
 from huawei_lte_api.enums.sms import BoxTypeEnum as BoxTypeEnum
-import subprocess
+from huawei_e3_e5.datastructures import SMSMessage
 
 '''
 try:
