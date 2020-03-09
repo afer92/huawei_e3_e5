@@ -117,6 +117,8 @@ class HuaweiModem():
         self._client.sms.send_sms(numbers, message)
 
     def _print_dict(self, name, one_dict, callBack=print):
+        if type(one_dict) == str:
+            return one_dict
         result = u'\n{}:\n'.format(name)
         for k, v in one_dict.items():
             result += '  {}: {}\n'.format(k.ljust(16), v)
@@ -422,7 +424,7 @@ class HuaweiModem():
         return self.build_sms_list(result, callback=callback)
 
     @property
-    def MIX_sent(self):
+    def mix_sent(self):
         return self._list_messages(box_type=BoxTypeEnum.MIX_SENT, callback=None)
 
     def print_mix_sent(self, callback=print):
