@@ -46,22 +46,6 @@ class HuaweiModem():
         self._infos = self._client.device.information()
         self._present = True
 
-        '''
-        self._infos = {}
-        try:
-            self._infos = self.get_device_infos()
-        except TokenError:
-            self._get_token_ext()
-            self._infos = self.get_device_infos()
-        if u'DeviceName' in self._infos.keys():
-            pass
-        else:
-            # modele type E3372
-            self._devicename = u'E3372'
-        self._log.debug(u'{}'.format(self._infos))
-        # self._get_token()
-        '''
-
     def __init__(self, interface=None, sysfs_path=None,
                  ip='192.168.8.1', log=None, logLevel=logging.INFO,
                  on_receive=None, on_send=None, on_event_parm=None,
