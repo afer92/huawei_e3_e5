@@ -48,6 +48,7 @@ class HuaweiDb(HuaweiModem):
         self._update_db = update_db
         self._cnx = None
         self._cursor = None
+        self._id = None
 
         if update_db:
             # self.update_db()
@@ -146,6 +147,7 @@ class HuaweiDb(HuaweiModem):
         smss = []
         for row in rows:
             sms = SMSMessage({})
+            sms.id = row[0]
             sms.content = row[2]
             sms.phone = row[1]
             sms.smsDate  = row[3]
@@ -156,7 +158,6 @@ class HuaweiDb(HuaweiModem):
                 sms.smsBox = BoxTypeEnum.LOCAL_SENT
             smss.append(sms)
         return smss
-        
 
     @property
     def db_file(self):
