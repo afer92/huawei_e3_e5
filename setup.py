@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='huawei_e3_e5',
-    version='0.1.4',
+    version='0.1.5',
     # packages=find_packages(exclude=['tests', 'tests.*']),
     package_data={'huawei_e3_e5': ['py.typed']},
     install_requires=[
@@ -15,7 +15,6 @@ setup(
     url='https://github.com/afer92/huawei_e3_e5',
     license='LGPL-3.0 ',
     author='Alain Ferraro',
-    author_email='afer92@free.fr',
     description='API For huawei LAN/WAN LTE Modems',
     packages=['huawei_e3_e5'],
     long_description=open('README.md', encoding='utf-8').read(),

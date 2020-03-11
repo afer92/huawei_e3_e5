@@ -26,20 +26,7 @@ class SMSMessage():
     '''
 
     def __repr__(self):
-        fromto = u'to'
-        if self._smsBox == BoxTypeEnum.LOCAL_TRASH :
-            fromto = u'trash'
-        if self._smsBox in (BoxTypeEnum.LOCAL_INBOX,
-                            BoxTypeEnum.SIM_INBOX,
-                            BoxTypeEnum.MIX_INBOX
-                            ):
-            fromto = u'from'
-        elif self._smsBox in (BoxTypeEnum.LOCAL_DRAFT,
-                            BoxTypeEnum.SIM_DRAFT,
-                            BoxTypeEnum.MIX_DRAFT
-                            ):
-            fromto = u'draft'
-
+        fromto = self.from_to
         result = u'< {}: {} time: {} index: {} box: {} content: "{}" >'
         return result.format(fromto, self.phone, self.smsDate, self.index,
                              self.box2str(self.smsBox), self.content)
@@ -58,6 +45,23 @@ class SMSMessage():
                 'MIX_SENT',
                 'MIX_DRAFT'
                 )[boxType]
+
+    @property
+    def from_to(self):
+        fromto = u'to'
+        if self._smsBox == BoxTypeEnum.LOCAL_TRASH :
+            fromto = u'trash'
+        if self._smsBox in (BoxTypeEnum.LOCAL_INBOX,
+                            BoxTypeEnum.SIM_INBOX,
+                            BoxTypeEnum.MIX_INBOX
+                            ):
+            fromto = u'from'
+        elif self._smsBox in (BoxTypeEnum.LOCAL_DRAFT,
+                            BoxTypeEnum.SIM_DRAFT,
+                            BoxTypeEnum.MIX_DRAFT
+                            ):
+            fromto = u'draft'
+        return fromto
 
     @property
     def id(self):

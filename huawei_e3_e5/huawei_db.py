@@ -98,7 +98,7 @@ class HuaweiDb(HuaweiModem):
         return self._cursor
 
     def sms_in_db(self, sms):
-        if sms.smsDate is not None:
+        if sms.from_to == 'from':
             # qsearch_in = u'SELECT `ID`,`SenderNumber`,`RecipientID` FROM `inbox` WHERE `ReceivingDateTime`=? AND `SenderNumber`=?;'
             query = self.qsearch_in
             params = (sms.smsDate, sms.phone)
@@ -124,7 +124,7 @@ class HuaweiDb(HuaweiModem):
             self.log.warning(u'sms already in db\n{}'.format(row))
             return True
         else:
-            if sms.smsDate is not None:
+            if sms.from_to == u'from':
                 query = self.qinsert_in
                 params = (sms.smsDate, sms.content, sms.phone, sms.index, '')
             else:
