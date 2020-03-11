@@ -8,6 +8,7 @@ class SMSMessage():
     def __init__(self, message, smsBox=BoxTypeEnum.LOCAL_INBOX):
         self._message = message
         self._smsBox = smsBox
+        self._id = None
         self.init()
 
     '''
@@ -57,6 +58,14 @@ class SMSMessage():
                 'MIX_SENT',
                 'MIX_DRAFT'
                 )[boxType]
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = id
 
     @property
     def message(self):
