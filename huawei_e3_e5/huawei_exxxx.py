@@ -28,7 +28,7 @@ def ping(host):
     # Building the command. Ex: "ping -c 1 google.com"
     command = ['ping', '-c', '2', host]
 
-    return subprocess.run(command, capture_output=True).returncode == 0
+    return subprocess.run(command, stdout=None, stderr=None).returncode == 0
 
 
 class HuaweiModem():
