@@ -10,11 +10,11 @@ import sqlite3
 from huawei_lte_api.enums.sms import BoxTypeEnum as BoxTypeEnum
 try:
     from huawei_e3_e5.huawei_exxxx import HuaweiModem
-except ModuleNotFoundError:
+except ImportError:
     from huawei_exxxx import HuaweiModem
 try:
     from huawei_e3_e5.datastructures import SMSMessage
-except ModuleNotFoundError:
+except ImportError:
     from datastructures import SMSMessage
 
 

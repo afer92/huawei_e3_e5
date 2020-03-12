@@ -1,14 +1,19 @@
 import sys
+import os
 import time
+import locale
+from subprocess import PIPE, Popen
 import subprocess
 import logging
 import logging.handlers
 from pprint import pformat
 import argparse
 from huawei_lte_api.Client import Client
+from huawei_lte_api.api.User import User
 from huawei_lte_api.AuthorizedConnection import AuthorizedConnection
 from huawei_lte_api.Connection import Connection
 from huawei_lte_api.enums.sms import BoxTypeEnum as BoxTypeEnum
+from huawei_lte_api.enums.user import PasswordTypeEnum
 from huawei_e3_e5.datastructures import SMSMessage
 
 '''
@@ -18,6 +23,27 @@ except ModuleNotFoundError:
     from huawei_exxx import HuaweiModem
 '''
 
+system_encoding = locale.getpreferredencoding()
+
+
+def exec_cmd(cmd_args):
+    # Using `shell=True` because commands may be scripts
+    # Using `universal_newlines=False` so we do not choke on implicit decode
+    # errors of bytes that are invalid (happens on Windows)
+    # NB! Python 2 returns a string, Python 3 returns a bytestring
+    # https://github.com/ftao/python-ifcfg/issues/17
+    env = os.environ.copy()
+    env.update({"LANG": "C"})
+    proc = Popen(cmd_args, stdout=PIPE, stderr=PIPE, universal_newlines=False, shell=True, env=env)
+    stdout, stderr = proc.communicate()
+    proc.wait()
+
+    # Decode returned strings according to system encoding
+    stdout = stdout.decode(system_encoding, errors='replace')
+    stderr = stderr.decode(system_encoding, errors='replace')
+
+    return (stdout, stderr, proc.returncode)
+
 
 def ping(host):
     """
@@ -26,9 +52,12 @@ def ping(host):
     """
 
     # Building the command. Ex: "ping -c 1 google.com"
-    command = ['ping', '-c', '2', host]
+    command = ['ping -c 2 {}'.format(host)]
 
-    return subprocess.run(command, stdout=None, stderr=None).returncode == 0
+    (stdout, stderr, returncode) = exec_cmd(command)
+    # print(stdout, stderr, returncode)
+
+    return returncode == 0
 
 
 class HuaweiModem():
@@ -38,10 +67,10 @@ class HuaweiModem():
             return
         if self._password is None:
             self._base_url = "http://{}/".format(self._ip)
+            self._connection = AuthorizedConnection(self._base_url, login_on_demand=True)
         else:
             self._base_url = "http://{}:{}@{}/".format(self._user, self._password, self._ip)
-
-        self._connection = AuthorizedConnection(self._base_url)
+            self._connection = AuthorizedConnection(self._base_url)
         self._client = Client(self._connection)
         self._infos = self._client.device.information()
         self._present = True
