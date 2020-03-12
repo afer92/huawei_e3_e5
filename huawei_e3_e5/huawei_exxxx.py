@@ -9,9 +9,11 @@ import logging.handlers
 from pprint import pformat
 import argparse
 from huawei_lte_api.Client import Client
+from huawei_lte_api.api.User import User
 from huawei_lte_api.AuthorizedConnection import AuthorizedConnection
 from huawei_lte_api.Connection import Connection
 from huawei_lte_api.enums.sms import BoxTypeEnum as BoxTypeEnum
+from huawei_lte_api.enums.user import PasswordTypeEnum
 from huawei_e3_e5.datastructures import SMSMessage
 
 '''
@@ -65,10 +67,10 @@ class HuaweiModem():
             return
         if self._password is None:
             self._base_url = "http://{}/".format(self._ip)
+            self._connection = AuthorizedConnection(self._base_url, login_on_demand=True)
         else:
             self._base_url = "http://{}:{}@{}/".format(self._user, self._password, self._ip)
-
-        self._connection = AuthorizedConnection(self._base_url)
+            self._connection = AuthorizedConnection(self._base_url)
         self._client = Client(self._connection)
         self._infos = self._client.device.information()
         self._present = True
